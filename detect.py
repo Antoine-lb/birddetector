@@ -76,7 +76,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     detections = detector.detect(rgb_image)
 
     # Draw keypoints and edges on input image
-    image = utils.visualize(image, detections)
+    image = utils.visualize(image, detections[:0])
     print("===")
     print(detections[0])
     print(detections[0].categories[0].label)
