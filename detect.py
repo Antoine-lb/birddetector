@@ -79,7 +79,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     image = utils.visualize(image, detections)
     print("===")
     print(detections[0])
-    print(detections[0].categories.label)
+    print(detections[0].categories[0].label)
     # print(detections.categories)
 
     # Calculate the FPS
