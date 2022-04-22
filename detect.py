@@ -87,7 +87,8 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     # else:
     #   print ("Don't print")
 
-
+    cv2.rectangle(image, pt1=(200,200), pt2=(300,300), color=(0,0,255), thickness=10)
+    
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
       end_time = time.time()
