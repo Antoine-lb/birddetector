@@ -81,8 +81,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
       image = utils.visualize(image, detections[:1])
       target = detections[0]
       print(target.bounding_box.left)
-      print("w", width)
-      print("h", height)
+      print("move x(", target.bounding_box.left - (width / 2), ") and y" , target.bounding_box.top - (height / 2), ")")
 
 
     # else:
