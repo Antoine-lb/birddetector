@@ -78,7 +78,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     # Draw keypoints and edges on input image
     image = utils.visualize(image, detections)
     print("===")
-    print(detections)
+    print(detections[0])
     # print(detections.categories)
 
     # Calculate the FPS
