@@ -81,6 +81,8 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
       image = utils.visualize(image, detections[:1])
       target = detections[0]
       print(target.bounding_box)
+      print("w", width)
+      print("h", height)
 
 
     # else:
