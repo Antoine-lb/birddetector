@@ -77,7 +77,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
 
     # Draw keypoints and edges on input image
     print("===")
-    print(detections[0])
+    print(detections)
     image = utils.visualize(image, detections)
     # print("===")
     # print(detections[0])
