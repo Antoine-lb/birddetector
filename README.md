@@ -1,3 +1,6 @@
+
+https://www.youtube.com/watch?v=mNjXEybFn98
+
 # TensorFlow Lite Python object detection example with Raspberry Pi
 
 This example uses [TensorFlow Lite](https://tensorflow.org/lite) with Python on
