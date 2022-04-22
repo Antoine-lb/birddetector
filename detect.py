@@ -82,7 +82,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     print(detections[0].categories[0].label)
     if (detections[0].categories[0].label == "person"):
       print ("keep going")
-    else
+    else:
       print ("Don't print")
 
     # print(detections.categories)
