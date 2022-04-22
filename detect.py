@@ -76,16 +76,17 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     detections = detector.detect(rgb_image)
 
     # Draw keypoints and edges on input image
-    image = utils.visualize(image, detections[:0])
     print("===")
     print(detections[0])
-    print(detections[0].categories[0].label)
-    if (detections[0].categories[0].label == "person"):
-      print ("keep going")
-    else:
-      print ("Don't print")
+    image = utils.visualize(image, detections)
+    # print("===")
+    # print(detections[0])
+    # print(detections[0].categories[0].label)
+    # if (detections[0].categories[0].label == "person"):
+    #   print ("keep going")
+    # else:
+    #   print ("Don't print")
 
-    # print(detections.categories)
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
