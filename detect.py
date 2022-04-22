@@ -79,7 +79,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     image = utils.visualize(image, detections)
     print("===")
     print(detections)
-    print(detections.categories)
+    # print(detections.categories)
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
