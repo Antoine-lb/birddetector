@@ -80,7 +80,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     print(detections)
     print(detections[:1])
     print("===")
-    image = utils.visualize(image, detections)
+    image = utils.visualize(image, detections[:1])
     # print("===")
     # print(detections[0])
     # print(detections[0].categories[0].label)
