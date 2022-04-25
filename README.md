@@ -3,6 +3,11 @@ https://www.youtube.com/watch?v=mNjXEybFn98
 
 https://gist.github.com/khanhlvg/bbeb5e4ccfca6cbcf18508a44f5964be
 
+
+```
+sudo ln -s /usr/lib/arm-linux-gnueabihf/libGLESv2.so.2 /usr/lib/arm-linux-gnueabihf/libGLESv2.so
+```
+
 # TensorFlow Lite Python object detection example with Raspberry Pi
 
 This example uses [TensorFlow Lite](https://tensorflow.org/lite) with Python on
