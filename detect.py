@@ -70,6 +70,8 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
 
     print("last_image_painted", last_image_painted)
     print("last_image_painted - time", last_image_painted - time.time())
+    diff = time.time() - last_image_painted
+    if (diff > -0.00)
     success, image = cap.read()
     if not success:
       sys.exit(
