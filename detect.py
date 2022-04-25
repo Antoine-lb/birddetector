@@ -80,17 +80,17 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     if (detections[0].categories[0].label == "person"):
       image = utils.visualize(image, detections[:1])
       target = detections[0]
-      print(target.bounding_box.left)
-      print("move x(", target.bounding_box.left - (width / 2), ") and y" , target.bounding_box.top - (height / 2), ")")
+      # print(target.bounding_box.left)
+      print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
 
 
     # else:
     #   print ("Don't print")
 
-    tolerance = 30
+    TOLERANCE = 30
     half_w = width / 2
     print("half_w", half_w)
-    cv2.rectangle(image, pt1=(300,220), pt2=(340,260), color=(255,0,0), thickness=1)
+    cv2.rectangle(image, pt1=(int(half_w - TOLERANCE),220), pt2=(340,260), color=(255,0,0), thickness=2)
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
