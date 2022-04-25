@@ -81,24 +81,25 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
 
     # Draw keypoints and edges on input image
 
-    if (detections[0].categories[0].label == "person"):
-      image = utils.visualize(image, detections[:1])
-      target = detections[0]
-      # print(target.bounding_box.left)
-      print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
-
-
-    # else:
-    #   print ("Don't print")
-
     TOLERANCE = 50
     SQUARE_X_TOP_LEFT = int(width / 2 - TOLERANCE)
     SQUARE_Y_TOP_LEFT = int(height / 2 - TOLERANCE)
     SQUARE_X_BOTTOM_RIGHT = int(width / 2 + TOLERANCE)
     SQUARE_Y_BOTTOM_RIGHT = int(height / 2 + TOLERANCE)
     print("======",)
-    print("is_inside_of_square", is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, int(width / 2), int(width / 2)))
     cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
+
+    if (detections[0].categories[0].label == "person"):
+      image = utils.visualize(image, detections[:1])
+      target = detections[0]
+      # print(target.bounding_box.left)
+      print("is_inside_of_square", is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, target.bounding_box.left, target.bounding_box.top ))
+
+      print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
+
+
+    # else:
+    #   print ("Don't print")
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
