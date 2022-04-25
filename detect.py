@@ -67,12 +67,14 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   # Continuously capture images from the camera and run inference
   while cap.isOpened():
     # Calculate the FPS
+    print ("counter" , counter)
+    print ("fps_avg_frame_count" , fps_avg_frame_count)
     if counter % fps_avg_frame_count == 0:
       end_time = time.time()
       fps = fps_avg_frame_count / (end_time - start_time)
       start_time = time.time()
 
-    print (fps)
+    print ("fps", fps)
     if (fps > 1):
       continue
     success, image = cap.read()
