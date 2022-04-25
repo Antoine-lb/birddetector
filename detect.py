@@ -87,7 +87,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     # else:
     #   print ("Don't print")
 
-    TOLERANCE = 30
+    TOLERANCE = 20
     print("======",)
     print("width", width)
     print("height", height)
