@@ -67,14 +67,17 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   # Continuously capture images from the camera and run inference
   while cap.isOpened():
     # Calculate the FPS
-    print ("counter" , counter)
-    print ("fps_avg_frame_count" , fps_avg_frame_count)
+
     if counter % fps_avg_frame_count == 0:
       end_time = time.time()
       fps = fps_avg_frame_count / (end_time - start_time)
       start_time = time.time()
+    counter += 1
 
     print ("fps", fps)
+    print ("counter" , counter)
+    print ("fps_avg_frame_count" , fps_avg_frame_count)
+    
     if (fps > 1):
       continue
     success, image = cap.read()
@@ -84,7 +87,6 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
           'ERROR: Unable to read from webcam. Please verify your webcam settings.'
       )
 
-    counter += 1
     image = cv2.flip(image, 1)
 
     # Run object detection estimation using the model.
