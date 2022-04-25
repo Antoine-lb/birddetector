@@ -71,7 +71,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     diff = time.time() - last_image_painted
     print("last_image_painted", last_image_painted)
     print("last_image_painted - time", diff)
-    if (diff < 2)
+    if (diff < 2):
       continue
 
     success, image = cap.read()
