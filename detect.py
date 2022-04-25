@@ -21,6 +21,10 @@ from object_detector import ObjectDetector
 from object_detector import ObjectDetectorOptions
 import utils
 
+def is_inside_of_square(Xtl, Ytl, Xbr, Ybr, Xa, Ya):
+  if( Xtl <= Xa <= Xbr and Ytl <= Ya <= Ybr):
+    return True
+  return False
 
 def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
         enable_edgetpu: bool) -> None:
@@ -88,15 +92,12 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     #   print ("Don't print")
 
     TOLERANCE = 50
-    SQUARE_Y_TOP_LEFT = int(height / 2 - TOLERANCE)
     SQUARE_X_TOP_LEFT = int(width / 2 - TOLERANCE)
-    SQUARE_Y_BOTTOM_RIGHT = int(height / 2 + TOLERANCE)
+    SQUARE_Y_TOP_LEFT = int(height / 2 - TOLERANCE)
     SQUARE_X_BOTTOM_RIGHT = int(width / 2 + TOLERANCE)
+    SQUARE_Y_BOTTOM_RIGHT = int(height / 2 + TOLERANCE)
     print("======",)
-    print("width", width)
-    print("height", height)
-    print("pt1",int(height / 2 - TOLERANCE), int(width / 2 - TOLERANCE))
-    print("pt2",int(height / 2 + TOLERANCE), int(width / 2 + TOLERANCE))
+    print("is_inside_of_square", is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, int(width / 2), int(width / 2)))
     cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
 
     # Calculate the FPS
