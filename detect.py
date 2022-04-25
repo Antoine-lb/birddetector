@@ -66,7 +66,15 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
 
   # Continuously capture images from the camera and run inference
   while cap.isOpened():
+    # Calculate the FPS
+    if counter % fps_avg_frame_count == 0:
+      end_time = time.time()
+      fps = fps_avg_frame_count / (end_time - start_time)
+      start_time = time.time()
+
+    print (fps)
     success, image = cap.read()
+
     if not success:
       sys.exit(
           'ERROR: Unable to read from webcam. Please verify your webcam settings.'
@@ -101,11 +109,6 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     # else:
     #   print ("Don't print")
 
-    # Calculate the FPS
-    if counter % fps_avg_frame_count == 0:
-      end_time = time.time()
-      fps = fps_avg_frame_count / (end_time - start_time)
-      start_time = time.time()
 
     # Show the FPS
     fps_text = 'FPS = {:.1f}'.format(fps)
