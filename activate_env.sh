@@ -1,1 +1,1 @@
-source ~/tflite/bin/activate
+echo "source ~/tflite/bin/activate\n"
