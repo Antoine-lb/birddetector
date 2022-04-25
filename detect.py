@@ -68,9 +68,9 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   last_image_painted = time.time();
   while cap.isOpened():
 
-    print("last_image_painted", last_image_painted)
-    print("last_image_painted - time", last_image_painted - time.time())
     diff = time.time() - last_image_painted
+    print("last_image_painted", last_image_painted)
+    print("last_image_painted - time", diff)
     # if (diff > -0.00)
     success, image = cap.read()
     if not success:
