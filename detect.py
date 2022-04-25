@@ -93,7 +93,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     print("height", height)
     print("pt1",int(height / 2 - TOLERANCE), int(width / 2 - TOLERANCE))
     print("pt2",int(height / 2 + TOLERANCE), int(width / 2 + TOLERANCE))
-    cv2.rectangle(image, pt1=(int(height / 2 - TOLERANCE), int(width / 2 - TOLERANCE)), pt2=(int(height / 2 + TOLERANCE), int(width / 2 + TOLERANCE)), color=(255,0,0), thickness=2)
+    cv2.rectangle(image, pt1=(int(width / 2 - TOLERANCE), int(height / 2 - TOLERANCE)), pt2=(int(width / 2 + TOLERANCE), int(height / 2 + TOLERANCE)), color=(255,0,0), thickness=2)
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
