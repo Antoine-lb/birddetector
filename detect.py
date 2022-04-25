@@ -73,6 +73,8 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
       start_time = time.time()
 
     print (fps)
+    if (fps > 1):
+      continue
     success, image = cap.read()
 
     if not success:
