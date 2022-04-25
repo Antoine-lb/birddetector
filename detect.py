@@ -44,7 +44,8 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   start_time = time.time()
 
   # Start capturing video input from the camera
-  cap = cv2.VideoCapture(camera_id)
+  # cap = cv2.VideoCapture(camera_id)
+  cap = cv2.VideoCapture(-1, cv2.CAP_V4L)
   cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
   cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
@@ -65,14 +66,13 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   detector = ObjectDetector(model_path=model, options=options)
 
   # Continuously capture images from the camera and run inference
-  last_image_painted = time.time();
+  # last_image_painted = time.time();
   while cap.isOpened():
 
-    diff = time.time() - last_image_painted
-    # print("last_image_painted", last_image_painted)
-    # print("last_image_painted - time", diff)
-    if (diff < 2):
-      continue
+    # intento de bajar las frames
+    # diff = time.time() - last_image_painted
+    # if (diff < 2):
+    #   continue
 
     success, image = cap.read()
     if not success:
@@ -125,7 +125,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     if cv2.waitKey(1) == 27:
       break
     cv2.imshow('object_detector', image)
-    last_image_painted = time.time()
+    # last_image_painted = time.time()
 
   cap.release()
   cv2.destroyAllWindows()
