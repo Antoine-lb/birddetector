@@ -65,6 +65,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   detector = ObjectDetector(model_path=model, options=options)
 
   # Continuously capture images from the camera and run inference
+  last_image_painted = time.time();
   while cap.isOpened():
 
     print("last_image_painted", last_image_painted)
