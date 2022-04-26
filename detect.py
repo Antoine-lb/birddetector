@@ -133,8 +133,8 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
         cv2.imshow('object_detector', image)
         # last_image_painted = time.time()
 
-      cap.release()
-      cv2.destroyAllWindows()
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 def main():
