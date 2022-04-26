@@ -101,8 +101,8 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     image = utils.visualize(image, detections)
 
     print(detections)
-    # if (detections[0].categories[0].label == "person"):
-    #   print("person dettected",)
+    if (detections[0] and detections[0].categories[0].label == "person"):
+      print("person dettected",)
 
     #   image = utils.visualize(image, detections[:1])
     #   target = detections[0]
