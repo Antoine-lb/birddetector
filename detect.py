@@ -101,7 +101,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     image = utils.visualize(image, detections)
 
     print(detections)
-    if (detections and detections[0]):
+    if (detections and detections[0].categories[0].label == "person"):
     # if (detections[0].categories[0].label == "person"):
       print("inside of if",)
 
