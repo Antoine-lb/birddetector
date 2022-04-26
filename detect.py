@@ -83,47 +83,47 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
       )
 
     nowTime = time.time()
-        if ((int(nowTime - startTime)) > fpsLimit):
-          # do other cv2 stuff....
-          counter += 1
-          image = cv2.flip(image, 1)
+    if ((int(nowTime - startTime)) > fpsLimit):
+      # do other cv2 stuff....
+      counter += 1
+      image = cv2.flip(image, 1)
 
-          # Run object detection estimation using the model.
-          rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-          detections = detector.detect(rgb_image)
+      # Run object detection estimation using the model.
+      rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+      detections = detector.detect(rgb_image)
 
-          # Draw keypoints and edges on input image
-          cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
+      # Draw keypoints and edges on input image
+      cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
 
-          if (detections and detections[0].categories[0].label == "person"):
-            image = utils.visualize(image, detections[:1])
-            target = detections[0]
-            print("======",)
+      if (detections and detections[0].categories[0].label == "person"):
+        image = utils.visualize(image, detections[:1])
+        target = detections[0]
+        print("======",)
 
-            print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
-            if is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, target.bounding_box.left, target.bounding_box.top ):
-              print("Laser: ON")
+        print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
+        if is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, target.bounding_box.left, target.bounding_box.top ):
+          print("Laser: ON")
 
-          # Calculate the FPS
-          if counter % fps_avg_frame_count == 0:
-            end_time = time.time()
-            fps = fps_avg_frame_count / (end_time - start_time)
-            start_time = time.time()
+      # Calculate the FPS
+      if counter % fps_avg_frame_count == 0:
+        end_time = time.time()
+        fps = fps_avg_frame_count / (end_time - start_time)
+        start_time = time.time()
 
-          # Show the FPS
-          fps_text = 'FPS = {:.1f}'.format(fps)
-          text_location = (left_margin, row_size)
-          cv2.putText(image, fps_text, text_location, cv2.FONT_HERSHEY_PLAIN,
-                      font_size, text_color, font_thickness)
+      # Show the FPS
+      fps_text = 'FPS = {:.1f}'.format(fps)
+      text_location = (left_margin, row_size)
+      cv2.putText(image, fps_text, text_location, cv2.FONT_HERSHEY_PLAIN,
+                  font_size, text_color, font_thickness)
 
-          # Stop the program if the ESC key is pressed.
-          if cv2.waitKey(1) == 27:
-            break
-          cv2.imshow('object_detector', image)
-          startTime = time.time() # reset time
+      # Stop the program if the ESC key is pressed.
+      if cv2.waitKey(1) == 27:
+        break
+      cv2.imshow('object_detector', image)
+      startTime = time.time() # reset time
 
-        cap.release()
-        cv2.destroyAllWindows()
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 
