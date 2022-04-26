@@ -5,7 +5,8 @@ https://gist.github.com/khanhlvg/bbeb5e4ccfca6cbcf18508a44f5964be
 
 
 ```
-sudo ln -s /usr/lib/arm-linux-gnueabihf/libGLESv2.so.2 /usr/lib/arm-linux-gnueabihf/libGLESv2.so
+    sudo apt-get-update
+    sudo apt full-upgrade
 ```
 
 # TensorFlow Lite Python object detection example with Raspberry Pi
