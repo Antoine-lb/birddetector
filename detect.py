@@ -98,19 +98,19 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     print("======",)
     cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
 
-    image = utils.visualize(image, detections)
+    # image = utils.visualize(image, detections)
 
     print(detections)
     if (detections and detections[0].categories[0].label == "person"):
     # if (detections[0].categories[0].label == "person"):
-      print("inside of if",)
+      # print("inside of if",)
 
-    #   image = utils.visualize(image, detections[:1])
-    #   target = detections[0]
+      image = utils.visualize(image, detections[:1])
+      target = detections[0]
 
-    #   print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
-    #   if is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, target.bounding_box.left, target.bounding_box.top ):
-    #     print("Laser: ON")
+      print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
+      if is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, target.bounding_box.left, target.bounding_box.top ):
+        print("Laser: ON")
 
 
     # else:
