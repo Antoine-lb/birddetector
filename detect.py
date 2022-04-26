@@ -83,7 +83,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
       )
 
     nowTime = time.time()
-        if (int(nowTime - startTime)) > fpsLimit:
+        if ((int(nowTime - startTime)) > fpsLimit):
           # do other cv2 stuff....
           counter += 1
           image = cv2.flip(image, 1)
