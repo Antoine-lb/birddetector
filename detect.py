@@ -58,9 +58,6 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   font_thickness = 1
   fps_avg_frame_count = 10
 
-  fpsLimit = 1 # throttle limit
-  startTime = time.time()
-
   # Initialize the object detection model
   options = ObjectDetectorOptions(
       num_threads=num_threads,
@@ -72,69 +69,73 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   # Continuously capture images from the camera and run inference
   # last_image_painted = time.time();
   while cap.isOpened():
+
+    # intento de bajar las frames
+    # diff = time.time() - last_image_painted
+    # if (diff < 2):
+    #   continue
+
     success, image = cap.read()
     if not success:
       sys.exit(
           'ERROR: Unable to read from webcam. Please verify your webcam settings.'
       )
 
-    nowTime = time.time()
-    if (int(nowTime - startTime)) > fpsLimit:
-        # do other cv2 stuff....
-        startTime = time.time() # reset time
+    counter += 1
+    image = cv2.flip(image, 1)
 
-        counter += 1
-        image = cv2.flip(image, 1)
+    # Run object detection estimation using the model.
+    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    detections = detector.detect(rgb_image)
 
-        # Run object detection estimation using the model.
-        rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        detections = detector.detect(rgb_image)
+    # Draw keypoints and edges on input image
 
-        # Draw keypoints and edges on input image
+    TOLERANCE = 50
+    SQUARE_X_TOP_LEFT = int(width / 2 - TOLERANCE)
+    SQUARE_Y_TOP_LEFT = int(height / 2 - TOLERANCE)
+    SQUARE_X_BOTTOM_RIGHT = int(width / 2 + TOLERANCE)
+    SQUARE_Y_BOTTOM_RIGHT = int(height / 2 + TOLERANCE)
+    cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
 
-        TOLERANCE = 50
-        SQUARE_X_TOP_LEFT = int(width / 2 - TOLERANCE)
-        SQUARE_Y_TOP_LEFT = int(height / 2 - TOLERANCE)
-        SQUARE_X_BOTTOM_RIGHT = int(width / 2 + TOLERANCE)
-        SQUARE_Y_BOTTOM_RIGHT = int(height / 2 + TOLERANCE)
-        cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
+    # image = utils.visualize(image, detections)
 
-        if (detections and detections[0].categories[0].label == "person"):
-        # if (detections[0].categories[0].label == "person"):
-          # print("inside of if",)
+    print(detections)
+    if (detections and detections[0].categories[0].label == "person"):
+    # if (detections[0].categories[0].label == "person"):
+      # print("inside of if",)
 
-          image = utils.visualize(image, detections[:1])
-          target = detections[0]
+      image = utils.visualize(image, detections[:1])
+      target = detections[0]
+      print("======",)
 
-          print("======",)
-          print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
-          if is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, target.bounding_box.left, target.bounding_box.top ):
-            print("Laser: ON")
+      print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
+      if is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, target.bounding_box.left, target.bounding_box.top ):
+        print("Laser: ON")
 
 
-        # else:
-        #   print ("Don't print")
+    # else:
+    #   print ("Don't print")
 
-        # Calculate the FPS
-        if counter % fps_avg_frame_count == 0:
-          end_time = time.time()
-          fps = fps_avg_frame_count / (end_time - start_time)
-          start_time = time.time()
+    # Calculate the FPS
+    if counter % fps_avg_frame_count == 0:
+      end_time = time.time()
+      fps = fps_avg_frame_count / (end_time - start_time)
+      start_time = time.time()
 
-        # Show the FPS
-        fps_text = 'FPS = {:.1f}'.format(fps)
-        text_location = (left_margin, row_size)
-        cv2.putText(image, fps_text, text_location, cv2.FONT_HERSHEY_PLAIN,
-                    font_size, text_color, font_thickness)
+    # Show the FPS
+    fps_text = 'FPS = {:.1f}'.format(fps)
+    text_location = (left_margin, row_size)
+    cv2.putText(image, fps_text, text_location, cv2.FONT_HERSHEY_PLAIN,
+                font_size, text_color, font_thickness)
 
-        # Stop the program if the ESC key is pressed.
-        if cv2.waitKey(1) == 27:
-          break
-        cv2.imshow('object_detector', image)
-        # last_image_painted = time.time()
+    # Stop the program if the ESC key is pressed.
+    if cv2.waitKey(1) == 27:
+      break
+    cv2.imshow('object_detector', image)
+    # last_image_painted = time.time()
 
-    cap.release()
-    cv2.destroyAllWindows()
+  cap.release()
+  cv2.destroyAllWindows()
 
 
 def main():
