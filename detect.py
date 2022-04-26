@@ -66,15 +66,14 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
       enable_edgetpu=enable_edgetpu)
   detector = ObjectDetector(model_path=model, options=options)
 
+  TOLERANCE = 50
+  SQUARE_X_TOP_LEFT = int(width / 2 - TOLERANCE)
+  SQUARE_Y_TOP_LEFT = int(height / 2 - TOLERANCE)
+  SQUARE_X_BOTTOM_RIGHT = int(width / 2 + TOLERANCE)
+  SQUARE_Y_BOTTOM_RIGHT = int(height / 2 + TOLERANCE)
+
   # Continuously capture images from the camera and run inference
-  # last_image_painted = time.time();
   while cap.isOpened():
-
-    # intento de bajar las frames
-    # diff = time.time() - last_image_painted
-    # if (diff < 2):
-    #   continue
-
     success, image = cap.read()
     if not success:
       sys.exit(
@@ -89,21 +88,9 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     detections = detector.detect(rgb_image)
 
     # Draw keypoints and edges on input image
-
-    TOLERANCE = 50
-    SQUARE_X_TOP_LEFT = int(width / 2 - TOLERANCE)
-    SQUARE_Y_TOP_LEFT = int(height / 2 - TOLERANCE)
-    SQUARE_X_BOTTOM_RIGHT = int(width / 2 + TOLERANCE)
-    SQUARE_Y_BOTTOM_RIGHT = int(height / 2 + TOLERANCE)
     cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
 
-    # image = utils.visualize(image, detections)
-
-    print(detections)
     if (detections and detections[0].categories[0].label == "person"):
-    # if (detections[0].categories[0].label == "person"):
-      # print("inside of if",)
-
       image = utils.visualize(image, detections[:1])
       target = detections[0]
       print("======",)
@@ -111,10 +98,6 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
       print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
       if is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, target.bounding_box.left, target.bounding_box.top ):
         print("Laser: ON")
-
-
-    # else:
-    #   print ("Don't print")
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
@@ -132,7 +115,6 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     if cv2.waitKey(1) == 27:
       break
     cv2.imshow('object_detector', image)
-    # last_image_painted = time.time()
 
   cap.release()
   cv2.destroyAllWindows()
