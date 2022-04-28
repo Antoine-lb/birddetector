@@ -88,7 +88,8 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
 
     # Run object detection estimation using the model.
     rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    detections = detector.detect(rgb_image)
+    # detections = detector.detect(rgb_image)
+    detections = []
 
     # Draw keypoints and edges on input image
     cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
