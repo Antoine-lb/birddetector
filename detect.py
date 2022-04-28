@@ -75,7 +75,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
       enable_edgetpu=enable_edgetpu)
   detector = ObjectDetector(model_path=model, options=options)
 
-  frame_rate = 4
+  frame_rate = 3
   prev = 0
 
   # Continuously capture images from the camera and run inference
