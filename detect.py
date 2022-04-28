@@ -75,6 +75,9 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
       enable_edgetpu=enable_edgetpu)
   detector = ObjectDetector(model_path=model, options=options)
 
+  frame_rate = 2
+  prev = 0
+
   # Continuously capture images from the camera and run inference
   while cap.isOpened():
     success, image = cap.read()
@@ -86,22 +89,24 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     counter += 1
     image = cv2.flip(image, 1)
 
-    # Run object detection estimation using the model.
-    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    # detections = detector.detect(rgb_image)
-    detections = []
+    if time_elapsed > 1./frame_rate:
+        prev = time.time()
 
-    # Draw keypoints and edges on input image
+        # Run object detection estimation using the model.
+        rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        detections = detector.detect(rgb_image)
+
+        if (detections and detections[0].categories[0].label == "person"):
+          image = utils.visualize(image, detections[:1])
+          target = detections[0]
+          print("======",)
+
+          print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
+          if is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, target.bounding_box.left, target.bounding_box.top ):
+            print("Laser: ON")
+
+
     cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
-
-    if (detections and detections[0].categories[0].label == "person"):
-      image = utils.visualize(image, detections[:1])
-      target = detections[0]
-      print("======",)
-
-      print("move x(", target.bounding_box.left - (width / 2), ") and y(" , target.bounding_box.top - (height / 2), ")")
-      if is_inside_of_square(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT, SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT, target.bounding_box.left, target.bounding_box.top ):
-        print("Laser: ON")
 
     # Calculate the FPS
     if counter % fps_avg_frame_count == 0:
