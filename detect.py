@@ -107,24 +107,24 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
           print("Laser: ON")
 
 
-    cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
+      cv2.rectangle(image, pt1=(SQUARE_X_TOP_LEFT, SQUARE_Y_TOP_LEFT), pt2=(SQUARE_X_BOTTOM_RIGHT, SQUARE_Y_BOTTOM_RIGHT), color=(239,80,0), thickness=3)
 
-    # Calculate the FPS
-    if counter % fps_avg_frame_count == 0:
-      end_time = time.time()
-      fps = fps_avg_frame_count / (end_time - start_time)
-      start_time = time.time()
+      # Calculate the FPS
+      if counter % fps_avg_frame_count == 0:
+        end_time = time.time()
+        fps = fps_avg_frame_count / (end_time - start_time)
+        start_time = time.time()
 
-    # Show the FPS
-    fps_text = 'FPS = {:.1f}'.format(fps)
-    text_location = (left_margin, row_size)
-    cv2.putText(image, fps_text, text_location, cv2.FONT_HERSHEY_PLAIN,
-                font_size, text_color, font_thickness)
+      # Show the FPS
+      fps_text = 'FPS = {:.1f}'.format(fps)
+      text_location = (left_margin, row_size)
+      cv2.putText(image, fps_text, text_location, cv2.FONT_HERSHEY_PLAIN,
+                  font_size, text_color, font_thickness)
 
-    # Stop the program if the ESC key is pressed.
-    if cv2.waitKey(1) == 27:
-      break
-    cv2.imshow('object_detector', image)
+      # Stop the program if the ESC key is pressed.
+      if cv2.waitKey(1) == 27:
+        break
+      cv2.imshow('object_detector', image)
 
   cap.release()
   cv2.destroyAllWindows()
