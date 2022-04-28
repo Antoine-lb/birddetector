@@ -45,7 +45,8 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   start_time = time.time()
 
   # Start capturing video input from the camera
-  cap = cv2.VideoCapture(camera_id)
+  cap = cv2.VideoCapture(1)
+  # cap = cv2.VideoCapture(camera_id)
   cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
   cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
@@ -60,7 +61,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   fpsLimit = 1 # throttle limit
   startTime = time.time()
 
-  TOLERANCE = 50
+  TOLERANCE = 100
   SQUARE_X_TOP_LEFT = int(width / 2 - TOLERANCE)
   SQUARE_Y_TOP_LEFT = int(height / 2 - TOLERANCE)
   SQUARE_X_BOTTOM_RIGHT = int(width / 2 + TOLERANCE)
