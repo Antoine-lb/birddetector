@@ -89,6 +89,7 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
     counter += 1
     image = cv2.flip(image, 1)
 
+    time_elapsed = time.time() - prev
     if time_elapsed > 1./frame_rate:
         prev = time.time()
 
